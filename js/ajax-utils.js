@@ -5,16 +5,16 @@
   function getRequestObject() {
     if (window.XMLHttpRequest) {
       return (new XMLHttpRequest());
-    } else if (window.ActiveXObject) {
+    } else if (window.ActiveXObject) { 
       // For very old IE browsers
       return (new ActiveXObject("Microsoft.XMLHTTP"));
     } else {
       global.alert("Ajax is not supported!");
-      return(null);
+      return null;
     }
   }
 
-  // Makes an Ajax GET request to 'requestUrl'
+  // Makes an Ajax GET request to requestUrl.
   ajaxUtils.sendGetRequest = function(requestUrl, responseHandler, isJsonResponse) {
     var request = getRequestObject();
     request.onreadystatechange = function() {
@@ -26,11 +26,9 @@
 
   function handleResponse(request, responseHandler, isJsonResponse) {
     if ((request.readyState == 4) && (request.status == 200)) {
-      // Default to isJsonResponse = true
-      if (isJsonResponse == undefined) {
+      if (isJsonResponse === undefined) {
         isJsonResponse = true;
       }
-
       if (isJsonResponse) {
         responseHandler(JSON.parse(request.responseText));
       } else {
@@ -39,7 +37,6 @@
     }
   }
 
-  // Expose utility to the global object
+  // Expose utility to global scope
   global.$ajaxUtils = ajaxUtils;
-
 })(window);
