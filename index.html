@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Restaurant Home</title>
+  <style>
+    /* Simple styling for the tile */
+    #specials-tile {
+      margin: 20px;
+      padding: 20px;
+      border: 2px solid #333;
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Our Restaurant</h1>
+  <!-- The Specials tile; note that the onClick uses the template placeholder -->
+  <div id="specials-tile">
+    <a href="#" onclick="$dc.loadMenuItems({{randomCategoryShortName}}); return false;">Specials</a>
+  </div>
+
+  <!-- For demo purposes, define $dc.loadMenuItems if it’s not provided -->
+  <script>
+    var $dc = $dc || {};
+    $dc.loadMenuItems = function(categoryShortName) {
+      // For demonstration, alert the category.
+      alert("Loading menu items for category: " + categoryShortName);
+      // In the actual application, this function would load the appropriate menu page.
+    };
+  </script>
+
+  <!-- Include the script that sets the randomCategoryShortName -->
+  <script src="js/script.js"></script>
+</body>
+</html>
