@@ -1,71 +1,57 @@
 (function(global) {
 
-var dc = {};
+  var dc = {};
 
-// The home HTML snippet file path
-var homeHtml = "snippets/home-snippet.html";
+  // File paths
+  var homeHtml = "snippets/home-snippet.html";
 
-// Convenience function for inserting innerHTML for 'select'
-var insertHtml = function(selector, html) {
-  var targetElem = document.querySelector(selector);
-  targetElem.innerHTML = html;
-};
+  // Convenience function to set innerHTML for a selector
+  var insertHtml = function(selector, html) {
+    document.querySelector(selector).innerHTML = html;
+  };
 
-// Show loading icon inside element identified by 'selector'.
-var showLoading = function(selector) {
-  var html = "<div class='text-center'>";
-  html += "<img src='images/ajax-loader.gif'></div>";
-  insertHtml(selector, html);
-};
+  // Show a loading image (you can replace with your own if desired)
+  var showLoading = function(selector) {
+    var html = "<div class='text-center'><img src='images/ajax-loader.gif' alt='loading'></div>";
+    insertHtml(selector, html);
+  };
 
-// Return substitute of '{{propName}}'
-// with propValue in given 'string'
-var insertProperty = function(string, propName, propValue) {
-  var propToReplace = "{{" + propName + "}}";
-  var newString =
-    string.replace(new RegExp(propToReplace, "g"), propValue);
-  return newString;
-};
+  // Replaces {{propName}} in 'string' with 'propValue'
+  var insertProperty = function(string, propName, propValue) {
+    var propToReplace = "{{" + propName + "}}";
+    var newString = string.replace(new RegExp(propToReplace, "g"), propValue);
+    return newString;
+  };
 
-// On page load (before images or CSS)
-document.addEventListener("DOMContentLoaded", function (event) {
+  // Load the home view, replacing the placeholder with a random category short name.
+  dc.loadHome = function() {
+    showLoading("#main-content");
+    $ajaxUtils.sendGetRequest(
+      homeHtml,
+      function(responseText) {
+        // Replace the placeholder with the actual random category short name.
+        responseText = insertProperty(responseText, "randomCategoryShortName", dc.randomCategoryShortName);
+        insertHtml("#main-content", responseText);
+      },
+      false);
+  };
 
-  // On first load, show home view
-  showLoading("#main-content");
-  $ajaxUtils.sendGetRequest(
-    homeHtml,
-    function (responseText) {
+  // For demo: load menu categories
+  dc.loadMenuCategories = function() {
+    alert("You clicked Menu. (Demo function: would normally load categories view.)");
+  };
 
-      // TODO: STEP 1: In script.js, we pick a random short_name (like 'L', 'D', 'S', etc.)
-      // We'll store it in a variable: e.g. dc.randomCategoryShortName = "'L'";
-      // Then we insert it below.
+  // Load a single category's menu items.
+  dc.loadMenuItems = function(categoryShortName) {
+    alert("Loading menu items for category: " + categoryShortName);
+  };
 
-      // STEP 2: Insert the randomCategoryShortName into home-snippet
-      // Replace {{randomCategoryShortName}} in the snippet
-      responseText =
-        insertProperty(responseText,
-                       "randomCategoryShortName",
-                       dc.randomCategoryShortName);
+  // Expose dc to the global scope.
+  global.$dc = dc;
 
-      // Load the snippet into #main-content
-      insertHtml("#main-content", responseText);
-    },
-    false); // false -> get snippet as plain text
-});
-
-// Load the menu categories view
-dc.loadMenuCategories = function() {
-  alert("You clicked Menu (demo). Normally loads categories-snippet.");
-};
-
-// Load a single category's menu items
-dc.loadMenuItems = function(categoryShortName) {
-  alert("You clicked category: " + categoryShortName +
-        "\n(Normally, I'd load that category's items here.)");
-};
-
-// Expose 'dc' to the global scope
-global.$dc = dc;
+  // On initial page load, load the home view.
+  document.addEventListener("DOMContentLoaded", function(event) {
+    dc.loadHome();
+  });
 
 })(window);
-
