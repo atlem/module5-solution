@@ -1,0 +1,29 @@
+<!--
+  This snippet is loaded as the default home view.
+  Notice the placeholder {{randomCategoryShortName}} 
+  in the onClick of the "Specials" tile.
+-->
+
+<div class="text-center">
+  <h2>Welcome to our Restaurant!</h2>
+  <div class="row">
+    <section class="col-md-4 col-sm-6 col-xs-12 tile">
+      <h3>Menu</h3>
+      <a href="#" onclick="$dc.loadMenuCategories();">Menu</a>
+    </section>
+
+    <section class="col-md-4 col-sm-6 col-xs-12 tile">
+      <h3>Specials</h3>
+      <!-- IMPORTANT: The assignment requires that we do NOT alter this snippet,
+           so we must replace {{randomCategoryShortName}} via JavaScript. -->
+      <a href="#" onclick="$dc.loadMenuItems({{randomCategoryShortName}});">
+        Specials
+      </a>
+    </section>
+
+    <section class="col-md-4 col-sm-6 col-xs-12 tile">
+      <h3>Map</h3>
+      <a href="#">Map</a>
+    </section>
+  </div>
+</div>
