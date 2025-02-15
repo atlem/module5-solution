@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
   <meta charset="utf-8">
   <title>Restaurant Home</title>
-  <style>
-    /* Simple styling for the tile */
-    #specials-tile {
-      margin: 20px;
-      padding: 20px;
-      border: 2px solid #333;
-      display: inline-block;
-      cursor: pointer;
-      text-align: center;
-    }
-  </style>
+  <!-- Optional: Bootstrap CSS for basic styling -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>Welcome to Our Restaurant</h1>
-  <!-- The Specials tile; note that the onClick uses the template placeholder -->
-  <div id="specials-tile">
-    <a href="#" onclick="$dc.loadMenuItems({{randomCategoryShortName}}); return false;">Specials</a>
+
+  <!-- Navigation bar (clicking the brand reloads the home view) -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#" id="homeTitle" onclick="$dc.loadHome();">
+          Restaurant
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Dynamic content will be inserted here -->
+    <div id="main-content"></div>
   </div>
 
-  <!-- For demo purposes, define $dc.loadMenuItems if it’s not provided -->
-  <script>
-    var $dc = $dc || {};
-    $dc.loadMenuItems = function(categoryShortName) {
-      // For demonstration, alert the category.
-      alert("Loading menu items for category: " + categoryShortName);
-      // In the actual application, this function would load the appropriate menu page.
-    };
-  </script>
+  <!-- jQuery (required for Bootstrap's JS) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <!-- Include the script that sets the randomCategoryShortName -->
+  <!-- Our scripts -->
+  <script src="js/ajax-utils.js"></script>
+  <script src="js/dc.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
