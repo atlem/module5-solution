@@ -1,35 +1,27 @@
 (function(global) {
 
-  // The 'dc' object we created in dc.js
+  // Access the dc object defined in dc.js (or create one if it doesn't exist)
   var dc = global.$dc || {};
 
-  // STEP 0: List possible short_names
-  var categories = [
-    "L",   // Lunch
-    "D",   // Dinner
-    "S",   // Sushi
-    "SP",  // Specials
-    "BR"   // Breakfast
-  ];
+  // STEP 0: Define an array of possible category short names.
+  var categories = ["L", "D", "S", "SP", "BR"];
 
-  // Helper: choose random element from an array
+  // STEP 1: Helper function to choose a random element from an array.
   function chooseRandom(array) {
     var index = Math.floor(Math.random() * array.length);
     return array[index];
   }
 
-  // STEP 1: Pick a random short_name
+  // STEP 2: Choose a random short name.
   var randomShortName = chooseRandom(categories);
 
-  // STEP 2: Must wrap it in quotes to produce a string literal, e.g. "'L'"
-  // so that the snippet's onclick="$dc.loadMenuItems({{randomCategoryShortName}})"
-  // becomes $dc.loadMenuItems('L');
+  // STEP 3: Wrap the short name in quotes so that when inserted it becomes a string literal.
   dc.randomCategoryShortName = "'" + randomShortName + "'";
 
-  // For debugging:
-  console.log("Chosen random category: " + randomShortName);
+  // Debug: log the chosen category.
+  console.log("Random category selected:", randomShortName);
 
-  // Expose updated 'dc' to the global scope
+  // Expose updated dc object to global scope.
   global.$dc = dc;
 
 })(window);
